@@ -9,6 +9,7 @@ import Menu from "remixicon-react/MenuLineIcon";
 import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
 import { useRef } from "react";
+import { useSelector } from "react-redux";
 
 const links = [
   {
@@ -26,6 +27,7 @@ const links = [
 ];
 export default function Header() {
   const menuRef = useRef(null);
+  const cartLength = useSelector((store) => store.cart.cart.length);
   function toggleMenu() {
     menuRef.current.classList.toggle("active");
   }
@@ -64,7 +66,9 @@ export default function Header() {
               </span>
               <span className={styles.cartIcon}>
                 <ShoppingBagLineIcon className={styles.icon} />
-                <span className={styles.badge}>1</span>
+                {cartLength > 0 && (
+                  <span className={styles.badge}>{cartLength}</span>
+                )}
               </span>
               <span>
                 <motion.img
