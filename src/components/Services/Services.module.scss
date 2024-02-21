@@ -1,0 +1,27 @@
+.serviceItem {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--card-bg-01);
+  border-radius: 0.5rem;
+
+  .iconContainer {
+    color: #fff;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    padding: 1rem;
+    .icon {
+      cursor: pointer;
+    }
+  }
+  h3 {
+    font-weight: 600;
+    font-size: 1.6rem;
+  }
+  p {
+    color: #222;
+    margin-top: 0.5rem;
+    font-size: 1.3rem;
+  }
+}

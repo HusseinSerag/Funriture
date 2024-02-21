@@ -3,6 +3,7 @@ import heroImg from "../assets/images/hero-img.png";
 import styles from "./../styles/Home.module.scss";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Services from "../components/Services/Services";
 export default function Home() {
   const year = new Date().getFullYear();
   return (
@@ -38,6 +39,7 @@ export default function Home() {
           </Row>
         </Container>
       </section>
+      <Services />
     </div>
   );
 }
