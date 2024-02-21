@@ -30,8 +30,8 @@ export default function Clock() {
     [time]
   );
   return (
-    <div className={`${styles.clockWrapper} d-flex align-items-center`}>
-      <div className={`${styles.clockData}  d-flex align-items-center gap-5`}>
+    <div className={`${styles.clockWrapper}`}>
+      <div className={`${styles.clockData}  d-flex align-items-center gap-3`}>
         <div>
           <h1>{days} </h1>
           <h5>Days</h5>

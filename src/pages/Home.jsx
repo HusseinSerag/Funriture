@@ -19,6 +19,7 @@ export default function Home() {
   const wirelessProducts = products.filter(
     (item) => item.category === "wireless"
   );
+  const popularProducts = products.filter((item) => item.category === "watch");
   return (
     <div>
       <section className={styles.heroSection}>
@@ -89,7 +90,7 @@ export default function Home() {
                 <Link to="/shop">Visit Store</Link>
               </motion.button>
             </Col>
-            <Col lg="6" md="6" className="text-end">
+            <Col lg="6" md="6" className="text-center">
               <div>
                 <img src={counterImg} />
               </div>
@@ -100,11 +101,21 @@ export default function Home() {
       <section className={styles.newArrivals}>
         <Container>
           <Row>
-            <Col lg="12" className="text-center">
+            <Col lg="12" className="text-center mb-5">
               <h2 className="section_title">New Arrivals</h2>
             </Col>
             <ProductList products={mobileProducts} />
             <ProductList products={wirelessProducts} />
+          </Row>
+        </Container>
+      </section>
+      <section className={styles.popularCategory}>
+        <Container>
+          <Row>
+            <Col lg="12" className="text-center mb-5">
+              <h2 className="section_title">Popular in Category</h2>
+            </Col>
+            <ProductList products={popularProducts} />
           </Row>
         </Container>
       </section>
