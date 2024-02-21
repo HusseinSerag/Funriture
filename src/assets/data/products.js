@@ -573,4 +573,7 @@ const products = [
   },
 ];
 
+export const categories = products.reduce((prev, current) => {
+  return !prev.includes(current.category) ? [...prev, current.category] : prev;
+}, []);
 export default products;
