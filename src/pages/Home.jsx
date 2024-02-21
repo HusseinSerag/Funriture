@@ -91,7 +91,7 @@ export default function Home() {
               </motion.button>
             </Col>
             <Col lg="6" md="6" className="text-center">
-              <div>
+              <div className={styles.counterImg}>
                 <img src={counterImg} />
               </div>
             </Col>

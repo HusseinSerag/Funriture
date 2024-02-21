@@ -56,3 +56,30 @@
     padding: 0.7rem 2rem;
   }
 }
+
+@media screen and (max-width: 992px) {
+  .heroSection {
+    .heroContent {
+      padding: 0;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      font-size: min(2.9rem, 1.5rem + 1.5vw);
+    }
+    p {
+      font-size: min(1.2rem, 0.7rem + 1vw);
+    }
+    .btn {
+      font-size: 1rem;
+    }
+  }
+  .timerContainer {
+    .clock {
+      text-align: center;
+      align-items: center;
+    }
+    .counterImg {
+      display: none;
+    }
+  }
+}

@@ -19,7 +19,7 @@ export default function Services() {
       <Container>
         <Row>
           {serviceData.map((data, index) => (
-            <Col lg="3" md="4" key={data.title}>
+            <Col lg="3" md="4" className="mb-4" key={data.title}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 className={styles.serviceItem}

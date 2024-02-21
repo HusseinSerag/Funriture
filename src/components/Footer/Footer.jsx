@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <Container>
         <Row>
-          <Col lg="4" className="d-flex flex-column gap-3">
+          <Col lg="4" className="d-flex flex-column gap-3" md="6">
             <h1>Fun-riture!</h1>
             <p className={`${styles.text} mt-4`}>
               Suspendisse sit amet lorem et sapien vehicula pulvinar. Nam
@@ -19,7 +19,7 @@ export default function Footer() {
               Proin eu eleifend ipsum. Fusce id commodo libero.
             </p>
           </Col>
-          <Col lg="3">
+          <Col lg="3" md="3">
             <div className={styles.quickLinks}>
               <h1 className={styles.linksTitle}>Top Categories</h1>
               <ListGroup className="mb-3">
@@ -38,7 +38,7 @@ export default function Footer() {
               </ListGroup>
             </div>
           </Col>
-          <Col lg="2">
+          <Col lg="2" md="3">
             <div className={styles.quickLinks}>
               <h1 className={styles.linksTitle}>Useful Links</h1>
               <ListGroup className="mb-3">
@@ -57,7 +57,7 @@ export default function Footer() {
               </ListGroup>
             </div>
           </Col>
-          <Col lg="3">
+          <Col lg="3" md="4">
             <div className={styles.quickLinks}>
               <h1 className={styles.linksTitle}>Contact</h1>
               <ListGroup className="mb-3">

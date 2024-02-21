@@ -8,6 +8,7 @@ import userImg from "../../assets/images/user-icon.png";
 import Menu from "remixicon-react/MenuLineIcon";
 import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
+import { useRef } from "react";
 
 const links = [
   {
@@ -24,6 +25,10 @@ const links = [
   },
 ];
 export default function Header() {
+  const menuRef = useRef(null);
+  function toggleMenu() {
+    menuRef.current.classList.toggle("active");
+  }
   return (
     <header className={styles.header}>
       <Container>
@@ -31,7 +36,11 @@ export default function Header() {
           <div className={styles.navWrapper}>
             <Logo />
 
-            <nav className={styles.navigation}>
+            <nav
+              className={styles.navigation}
+              ref={menuRef}
+              onClick={toggleMenu}
+            >
               <ul className={styles.menu}>
                 {links.map((link) => (
                   <li className={styles.navItem} key={link.path}>
@@ -64,10 +73,10 @@ export default function Header() {
                   alt="user profile picture"
                 />
               </span>
+              <div className={styles.mobileMenu} onClick={toggleMenu}>
+                <Menu />
+              </div>
             </nav>
-            <div className={styles.mobileMenu}>
-              <Menu />
-            </div>
           </div>
         </Row>
       </Container>

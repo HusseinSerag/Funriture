@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./Clock.module.scss";
 function timeDifference(startDate, endDate) {
-  // Calculate the difference in milliseconds
   let difference = Math.abs(endDate - startDate);
 
-  // Calculate days, hours, minutes, and seconds
   let days = Math.floor(difference / (1000 * 60 * 60 * 24));
   let hours = Math.floor(
     (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -22,7 +20,6 @@ export default function Clock() {
     function () {
       const id = setInterval(() => {
         setTime((time) => time - 1);
-        console.log(time);
       }, 1000);
 
       return () => clearInterval(id);
@@ -31,7 +28,7 @@ export default function Clock() {
   );
   return (
     <div className={`${styles.clockWrapper}`}>
-      <div className={`${styles.clockData}  d-flex align-items-center gap-3`}>
+      <div className={`${styles.clockData}  d-flex align-items-center gap-3 `}>
         <div>
           <h1>{days} </h1>
           <h5>Days</h5>
