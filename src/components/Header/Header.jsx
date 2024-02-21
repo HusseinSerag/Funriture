@@ -1,5 +1,5 @@
 import styles from "./Header.module.scss";
-import logo from "../../assets/images/eco-logo.png";
+
 import { Container, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import ShoppingBagLineIcon from "remixicon-react/ShoppingBagLineIcon";
@@ -7,6 +7,7 @@ import Heart from "remixicon-react/HeartLineIcon";
 import userImg from "../../assets/images/user-icon.png";
 import Menu from "remixicon-react/MenuLineIcon";
 import { motion } from "framer-motion";
+import Logo from "../Logo/Logo";
 
 const links = [
   {
@@ -28,15 +29,7 @@ export default function Header() {
       <Container>
         <Row>
           <div className={styles.navWrapper}>
-            <div className={styles.logo}>
-              <img src={logo} alt="shop logo" />
-              <div>
-                <h1>Fun-riture!</h1>
-                <p>
-                  Since a <em>really</em> long time!
-                </p>
-              </div>
-            </div>
+            <Logo />
 
             <nav className={styles.navigation}>
               <ul className={styles.menu}>
