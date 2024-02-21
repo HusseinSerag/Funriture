@@ -34,3 +34,25 @@
     }
   }
 }
+
+.timerContainer {
+  background-color: var(--primary-color);
+  padding: 2rem 0;
+  .clock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: start;
+  }
+  img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
+  .limitedBtn {
+    background-color: #fff;
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 0.7rem 2rem;
+  }
+}
