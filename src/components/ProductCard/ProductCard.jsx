@@ -3,7 +3,33 @@ import AddToList from "remixicon-react/AddLineIcon";
 import { Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
+import { Bounce, toast } from "react-toastify";
 export default function ProductCard({ item }) {
+  const dispatch = useDispatch();
+  function handleClick() {
+    dispatch(
+      addItem({
+        id: item.id,
+        productName: item.productName,
+        price: item.price,
+        imgUrl: item.imgUrl,
+      })
+    );
+
+    toast("🦄 Wow so easy!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  }
   return (
     <Col lg="3" md="4" className="mb-2">
       <div className={styles.card}>
@@ -21,6 +47,7 @@ export default function ProductCard({ item }) {
           <motion.div
             whileTap={{ scale: 1.2 }}
             className={styles.iconContainer}
+            onClick={() => handleClick()}
           >
             <AddToList />
           </motion.div>
