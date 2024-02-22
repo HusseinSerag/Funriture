@@ -13,7 +13,11 @@ export default function Routers() {
       <Route index element={<Navigate replace to="/home" />} />
       <Route path="/home" element={<Home />} />
       <Route path="/shop" element={<Shop />} />
-      <Route path="/shop/:id" element={<ProductDetails />} />
+      <Route path="/shop/:id" element={<ProductDetails />}>
+        <Route index element={<Navigate replace to="description" />} />
+        <Route path="description" element={<h1>description</h1>} />
+        <Route path="reviews" element={<h1>Reviews</h1>} />
+      </Route>
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
       <Route path="/checkout" element={<Checkout />} />
