@@ -6,13 +6,15 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner/Spinner";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/slices/userSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   async function login(e) {
     e.preventDefault();
     if (!email || !password) {
@@ -28,6 +30,7 @@ export default function Login() {
         password
       );
       const user = userCredential.user;
+      dispatch(setUser({ currentUser: user, status: "Logged" }));
       toast.success("Successfully logged in");
       navigate("/home");
     } catch (err) {

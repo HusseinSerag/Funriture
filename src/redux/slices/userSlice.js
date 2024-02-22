@@ -23,9 +23,18 @@ export const fetchUser = () => {
   return function (dispatch, getState) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user);
+        console.log(user.displayName);
+        const data = {
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        };
+
         dispatch({
           type: "user/setUser",
-          payload: { currentUser: user, status: "Logged" },
+          payload: { currentUser: data, status: "Logged" },
         });
       } else {
         dispatch({
@@ -36,5 +45,5 @@ export const fetchUser = () => {
     });
   };
 };
-export const {} = userSlice.actions;
+export const { setUser } = userSlice.actions;
 export default userSlice.reducer;

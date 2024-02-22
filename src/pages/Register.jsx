@@ -43,22 +43,22 @@ export default function Register() {
           toast.error(error.message);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(user, {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            updateProfile(user, {
               //update user's profile
               displayName: username,
               photoURL: downloadURL,
+            }).then(() => {
+              setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                displayName: username,
+                email,
+                photoURL: downloadURL,
+                cart: [],
+              });
             });
 
             //store user in db
-
-            await setDoc(doc(db, "users", user.uid), {
-              uid: user.uid,
-              displayName: username,
-              email,
-              photoURL: downloadURL,
-              cart: [],
-            });
           });
         }
       );
@@ -110,6 +110,7 @@ export default function Register() {
                     <input
                       type="file"
                       onChange={(e) => setFiles(e.target.files[0])}
+                      accept="image/png, image/gif, image/jpeg"
                     />
                   </FormGroup>
                   <button className={styles.btn}>Register</button>
