@@ -78,8 +78,11 @@
       text-align: center;
       align-items: center;
     }
-    .counterImg {
-      display: none;
-    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .counterImg {
+    display: none;
   }
 }

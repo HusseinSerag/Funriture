@@ -1,7 +1,3 @@
-import productImg01 from "../images/double-sofa-01.png";
-import productImg02 from "../images/double-sofa-02.png";
-import productImg03 from "../images/double-sofa-03.png";
-
 import productImg04 from "../images/single-sofa-01.jpg";
 import productImg05 from "../images/single-sofa-02.jpg";
 import productImg06 from "../images/single-sofa-03.jpg";
@@ -23,16 +19,14 @@ import productImg19 from "../images/watch-01.jpg";
 import productImg20 from "../images/watch-02.jpg";
 import productImg21 from "../images/watch-03.jpg";
 import productImg22 from "../images/watch-04.jpg";
-
 import productImg23 from "../images/wireless-01.png";
-
 import productImg25 from "../images/wireless-03.png";
 
 const products = [
   {
     id: "01",
     productName: "Stone and Beam Westview ",
-    imgUrl: productImg01,
+    imgUrl: "/src/assets/images/double-sofa-01.png",
     category: "sofa",
     price: 193,
     shortDesc:
@@ -51,7 +45,7 @@ const products = [
   {
     id: "02",
     productName: "Rivet Bigelow Modern ",
-    imgUrl: productImg02,
+    imgUrl: "/src/assets/images/double-sofa-02.png",
     category: "sofa",
     price: 253,
     shortDesc:
@@ -74,7 +68,7 @@ const products = [
   {
     id: "03",
     productName: "Amazon Brand Modern Sofa",
-    imgUrl: productImg03,
+    imgUrl: "/src/assets/images/double-sofa-03.png",
     category: "sofa",
     price: 173,
     shortDesc:
@@ -96,7 +90,7 @@ const products = [
   {
     id: "26",
     productName: "Rivet Bigelow Modern ",
-    imgUrl: productImg02,
+    imgUrl: "/src/assets/images/double-sofa-02.png",
     category: "sofa",
     price: 253,
     shortDesc:
