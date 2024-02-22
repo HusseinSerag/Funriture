@@ -76,7 +76,9 @@ export default function Cart() {
                   <Link to="/shop">Continue Shopping</Link>
                 </button>
                 <button>
-                  <Link to="/checkout">Checkout</Link>
+                  <Link to={subTotal > 0 ? "/checkout" : "/shop"}>
+                    {subTotal > 0 ? "Checkout" : "Go shopping!!!"}
+                  </Link>
                 </button>
               </div>
             </Col>
