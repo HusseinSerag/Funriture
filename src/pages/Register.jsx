@@ -57,6 +57,7 @@ export default function Register() {
               displayName: username,
               email,
               photoURL: downloadURL,
+              cart: [],
             });
           });
         }

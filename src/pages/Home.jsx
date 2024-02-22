@@ -1,14 +1,42 @@
 import { Col, Container, Row } from "react-bootstrap";
 import heroImg from "../assets/images/hero-img.png";
 import styles from "./../styles/Home.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import Services from "../components/Services/Services";
 import ProductList from "../components/ProductList/ProductList";
 import counterImg from "../assets/images/counter-timer-img.png";
 import products from "../assets/data/products";
 import Clock from "../components/Clock/Clock";
+import { useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+
+import { db } from "../firebase";
+import { useSelector } from "react-redux";
+
 export default function Home() {
+  const currentUser = useSelector((store) => store.user.currentUser);
+
+  useEffect(
+    function () {
+      const x = async (user) => {
+        const docRef = doc(db, "users", user);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+        } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      };
+      if (currentUser?.displayName) {
+        x(currentUser.uid);
+      }
+    },
+    [currentUser]
+  );
+
   const year = new Date().getFullYear();
 
   const filteredProducts = products.filter((item) => item.category === "chair");

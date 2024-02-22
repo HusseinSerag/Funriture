@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import Checkout from "../pages/Checkout";
 import Description from "../components/Description/Description";
 import Reviews from "../components/Reviews/Reviews";
+import ProtectRoute from "./ProtectRoute";
 
 export default function Routers() {
   return (
@@ -22,7 +23,14 @@ export default function Routers() {
       </Route>
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/checkout" element={<Checkout />} />
+      <Route
+        path="/checkout"
+        element={
+          <ProtectRoute>
+            <Checkout />
+          </ProtectRoute>
+        }
+      />
       <Route path="/register" element={<Register />} />
     </Routes>
   );

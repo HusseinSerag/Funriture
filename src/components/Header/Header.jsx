@@ -1,7 +1,7 @@
 import styles from "./Header.module.scss";
 
 import { Container, Row } from "react-bootstrap";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ShoppingBagLineIcon from "remixicon-react/ShoppingBagLineIcon";
 import Heart from "remixicon-react/HeartLineIcon";
 import userImg from "../../assets/images/user-icon.png";
@@ -10,6 +10,10 @@ import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
+
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import { toast } from "react-toastify";
 
 const links = [
   {
@@ -29,8 +33,22 @@ export default function Header() {
   const menuRef = useRef(null);
   const cartLength = useSelector((store) => store.cart.cart.length);
   const navigate = useNavigate();
+  const currentUser = useSelector((store) => store.user.currentUser);
   function toggleMenu() {
     menuRef.current.classList.toggle("active");
+  }
+  const profileActionsRef = useRef();
+  function logout() {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logged Out");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }
+  function toggleActions() {
+    profileActionsRef.current.classList.toggle("show");
   }
   return (
     <header className={styles.header}>
@@ -74,13 +92,23 @@ export default function Header() {
                   <span className={styles.badge}>{cartLength}</span>
                 )}
               </span>
-              <span>
+              <div className={styles.profile} onClick={toggleActions}>
                 <motion.img
                   whileTap={{ scale: 1.2 }}
-                  src={userImg}
+                  src={currentUser.displayName ? currentUser.photoURL : userImg}
                   alt="user profile picture"
                 />
-              </span>
+                <div className={styles.actions} ref={profileActionsRef}>
+                  {currentUser.displayName ? (
+                    <span onClick={logout}>Logout</span>
+                  ) : (
+                    <div>
+                      <Link to="/register">Register</Link>
+                      <Link to="/login">Login</Link>{" "}
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className={styles.mobileMenu} onClick={toggleMenu}>
                 <Menu />
               </div>
