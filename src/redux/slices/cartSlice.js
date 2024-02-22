@@ -22,9 +22,20 @@ const cartSlice = createSlice({
         }
       },
     },
-    removeItem(state, action) {},
+    removeItem(state, action) {
+      const item = action.payload;
+      const exists = state.cart.find((oldItems) => oldItems.id === item.id);
+      if (exists.quantity > 1) {
+        exists.quantity--;
+      } else {
+        const index = state.cart.findIndex(
+          (oldItems) => oldItems.id === item.id
+        );
+        state.cart.splice(index, 1);
+      }
+    },
   },
 });
 
-export const { addItem } = cartSlice.actions;
+export const { addItem, removeItem } = cartSlice.actions;
 export default cartSlice.reducer;

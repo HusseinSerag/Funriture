@@ -1,0 +1,57 @@
+.table {
+  font-size: 1.6rem;
+  text-align: center;
+  vertical-align: middle;
+  td {
+    color: var(--primary-color);
+  }
+}
+
+.empty {
+  text-align: center;
+  font-size: 2.4rem;
+}
+.img {
+  width: 7rem;
+}
+.title,
+.delete {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .table {
+    font-size: 1.2rem;
+  }
+}
+
+.subtotal {
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h6 {
+    font-size: 1.4rem;
+  }
+}
+.amount {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.text {
+  font-size: 1.3rem;
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 2rem 0;
+  gap: 1.5rem;
+  button {
+    padding: 1rem 2rem;
+    color: #fff;
+    background-color: var(--primary-color);
+    font-weight: 600;
+  }
+}

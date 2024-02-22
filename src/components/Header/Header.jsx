@@ -1,7 +1,7 @@
 import styles from "./Header.module.scss";
 
 import { Container, Row } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ShoppingBagLineIcon from "remixicon-react/ShoppingBagLineIcon";
 import Heart from "remixicon-react/HeartLineIcon";
 import userImg from "../../assets/images/user-icon.png";
@@ -28,6 +28,7 @@ const links = [
 export default function Header() {
   const menuRef = useRef(null);
   const cartLength = useSelector((store) => store.cart.cart.length);
+  const navigate = useNavigate();
   function toggleMenu() {
     menuRef.current.classList.toggle("active");
   }
@@ -64,7 +65,10 @@ export default function Header() {
                 <Heart className={styles.icon} />
                 <span className={styles.badge}>1</span>
               </span>
-              <span className={styles.cartIcon}>
+              <span
+                className={styles.cartIcon}
+                onClick={() => navigate("/cart")}
+              >
                 <ShoppingBagLineIcon className={styles.icon} />
                 {cartLength > 0 && (
                   <span className={styles.badge}>{cartLength}</span>
