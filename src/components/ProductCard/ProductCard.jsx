@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
 import { Bounce, toast } from "react-toastify";
+import Star from "remixicon-react/StarFillIcon";
 export default function ProductCard({ item }) {
   const dispatch = useDispatch();
   function handleClick() {
@@ -29,11 +30,15 @@ export default function ProductCard({ item }) {
             <Link to={`/shop/${item.id}`}>{item.productName}</Link>
           </h3>
           <span>{item.category}</span>
+          <div className={styles.productRating}>
+            <Star size={20} className={styles.icon} /> {item.avgRating}
+          </div>
         </div>
         <div
           className={`${styles.bottom} d-flex align-items-center justify-content-between p-2`}
         >
           <span className={styles.price}>${item.price}</span>
+
           <motion.div
             whileTap={{ scale: 1.2 }}
             className={styles.iconContainer}

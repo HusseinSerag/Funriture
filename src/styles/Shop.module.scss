@@ -1,0 +1,45 @@
+.searchBox {
+  border: 1px solid var(--primary-color);
+  display: flex;
+  padding-right: 1rem;
+  border-radius: 3px;
+  align-items: center;
+  input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 1rem 2rem;
+    width: 100%;
+
+    font-size: 1.5rem;
+    &::placeholder {
+      font-size: 1.3rem;
+    }
+  }
+  .iconContainer {
+    color: var(--primary-color);
+  }
+}
+.filter {
+  select {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+    option {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.notFound {
+  font-size: 3rem;
+  text-align: center;
+}

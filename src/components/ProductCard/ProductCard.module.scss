@@ -12,6 +12,16 @@
     font-weight: 600;
     margin-top: 1.5rem;
   }
+  .productRating {
+    margin: 0.5rem 0;
+    font-size: 1.9rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .icon {
+      color: #d8bd21;
+    }
+  }
   span {
     font-size: 1.4rem;
   }
