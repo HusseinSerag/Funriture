@@ -6,6 +6,8 @@ import Register from "../pages/Register";
 import Cart from "../pages/Cart";
 import Login from "../pages/Login";
 import Checkout from "../pages/Checkout";
+import Description from "../components/Description/Description";
+import Reviews from "../components/Reviews/Reviews";
 
 export default function Routers() {
   return (
@@ -15,8 +17,8 @@ export default function Routers() {
       <Route path="/shop" element={<Shop />} />
       <Route path="/shop/:id" element={<ProductDetails />}>
         <Route index element={<Navigate replace to="description" />} />
-        <Route path="description" element={<h1>description</h1>} />
-        <Route path="reviews" element={<h1>Reviews</h1>} />
+        <Route path="description" element={<Description />} />
+        <Route path="reviews" element={<Reviews />} />
       </Route>
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />

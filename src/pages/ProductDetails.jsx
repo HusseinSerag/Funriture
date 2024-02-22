@@ -6,11 +6,24 @@ import styles from "./../styles/ProductDetails.module.scss";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
-
+import ProductList from "../components/ProductList/ProductList";
+import { motion } from "framer-motion";
+import StarFilled from "remixicon-react/StarFillIcon";
+import StarLined from "remixicon-react/StarLineIcon";
 export default function ProductDetails() {
   const { id } = useParams();
   const product = products.find((product) => product.id === id);
   const dispatch = useDispatch();
+  const filteredProducts = products.filter(
+    (productCat) => productCat.category === product.category
+  );
+  const length = Math.floor(product.avgRating);
+  const filled = Array.from({ length: length }, (_, i) => (
+    <StarFilled key={i} className={styles.icon} size={20} />
+  ));
+  const notFilled = Array.from({ length: 5 - length }, (_, i) => (
+    <StarLined key={i} className={styles.icon} size={20} />
+  ));
 
   function handleClick() {
     dispatch(
@@ -39,7 +52,10 @@ export default function ProductDetails() {
               <div className={styles.info}>
                 <h1 className={styles.title}>{product.productName}</h1>
                 <div className={styles.rating}>
-                  <span>stars</span>
+                  <span>
+                    {filled}
+                    {notFilled}
+                  </span>
                   <p>({product.avgRating} rating)</p>
                 </div>
                 <div className={styles.priceCategory}>
@@ -49,11 +65,15 @@ export default function ProductDetails() {
                   </span>
                 </div>
                 <div className={styles.desc}>
-                  <p className={styles.description}>{product.description}</p>
+                  <p className={styles.description}>{product.shortDesc}</p>
                 </div>
-                <button className={styles.btn} onClick={handleClick}>
+                <motion.button
+                  whileTap={{ scale: 1.2 }}
+                  className={styles.btn}
+                  onClick={handleClick}
+                >
                   Add to Cart
-                </button>
+                </motion.button>
               </div>
             </Col>
           </Row>
@@ -74,10 +94,20 @@ export default function ProductDetails() {
                 to="reviews"
                 className={({ isActive }) => (isActive ? styles.active : "")}
               >
-                Reviews
+                Reviews ({product.reviews.length})
               </NavLink>
             </div>
             <Outlet />
+          </Row>
+        </Container>
+      </section>
+      <section className={styles.recommended}>
+        <Container>
+          <Row>
+            <Col lg="12" className="text-center">
+              <h2 className="section_title">You might also Like</h2>
+            </Col>
+            <ProductList products={filteredProducts} />
           </Row>
         </Container>
       </section>

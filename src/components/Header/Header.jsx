@@ -21,8 +21,8 @@ const links = [
     display: "Shop",
   },
   {
-    path: "/checkout",
-    display: "Checkout",
+    path: "/cart",
+    display: "Cart",
   },
 ];
 export default function Header() {
