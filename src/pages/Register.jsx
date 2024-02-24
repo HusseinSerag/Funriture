@@ -34,6 +34,7 @@ export default function Register() {
         email,
         password
       );
+
       const user = userCredential.user;
 
       const storageRef = ref(storage, `images/${Date.now() + username}`);
@@ -48,23 +49,28 @@ export default function Register() {
               //update user's profile
               displayName: username,
               photoURL: downloadURL,
-            }).then(() => {
-              setDoc(doc(db, "users", user.uid), {
-                uid: user.uid,
-                displayName: username,
-                email,
-                photoURL: downloadURL,
-                cart: [],
+            })
+              .then(async () => {
+                setDoc(doc(db, "users", user.uid), {
+                  uid: user.uid,
+                  displayName: username,
+                  email,
+                  photoURL: downloadURL,
+                  cart: [],
+                });
+              })
+              .then(() => {
+                setLoading(false);
+                toast.success("Successfully registered!");
+                navigate("/login");
               });
-            });
 
             //store user in db
           });
         }
       );
-      toast.success("Successfully registered!");
-      navigate("/login");
     } catch (err) {
+      setLoading(false);
       toast.error("Something went wrong!");
     } finally {
       setLoading(false);

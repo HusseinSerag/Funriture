@@ -23,18 +23,13 @@ export const fetchUser = () => {
   return function (dispatch, getState) {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
-        console.log(user.displayName);
         const data = {
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-          uid: user.uid,
+          displayName: user.providerData.displayName,
+          uid: user.providerData.uid,
         };
-
         dispatch({
           type: "user/setUser",
-          payload: { currentUser: data, status: "Logged" },
+          payload: { currentUser: data, status: "unLogged" },
         });
       } else {
         dispatch({

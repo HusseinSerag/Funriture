@@ -30,7 +30,17 @@ export default function Login() {
         password
       );
       const user = userCredential.user;
-      dispatch(setUser({ currentUser: user, status: "Logged" }));
+      dispatch(
+        setUser({
+          currentUser: {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            uid: user.uid,
+          },
+          status: "Logged",
+        })
+      );
       toast.success("Successfully logged in");
       navigate("/home");
     } catch (err) {
