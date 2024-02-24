@@ -1,21 +1,36 @@
 import { Col, Container, Row } from "react-bootstrap";
 import HeroSection from "../components/HeroSection/HeroSection";
 import styles from "../styles/Shop.module.scss";
-import products, { categories } from "../assets/data/products";
+
 import SearchIcon from "remixicon-react/SearchLineIcon";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ProductList from "../components/ProductList/ProductList";
-const options = categories.map((category) => (
-  <option key={category} value={category}>
-    {category}
-  </option>
-));
+import { useSelector } from "react-redux";
 
 export default function Shop() {
+  const { products } = useSelector((store) => store.product);
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
   const [searchBar, setSearchBar] = useState("");
 
+  const categories = useMemo(
+    () =>
+      products.reduce((prev, current) => {
+        return !prev.includes(current.category)
+          ? [...prev, current.category]
+          : prev;
+      }, []),
+    [products]
+  );
+  const options = useMemo(
+    () =>
+      categories.map((category) => (
+        <option key={category} value={category}>
+          {category}
+        </option>
+      )),
+    [categories]
+  );
   let filteredProduct = filterProducts(products, filter, searchBar);
   filteredProduct = sortProducts(filteredProduct, sort);
   console.log(filteredProduct);

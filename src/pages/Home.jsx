@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Services from "../components/Services/Services";
 import ProductList from "../components/ProductList/ProductList";
 import counterImg from "../assets/images/counter-timer-img.png";
-import products from "../assets/data/products";
+
 import Clock from "../components/Clock/Clock";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,11 +18,7 @@ import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 
 export default function Home() {
   const currentUser = useSelector((store) => store.user.currentUser);
-  const {
-    isLoading,
-    error,
-    products: displayedProducts,
-  } = useSelector((store) => store.product);
+  const { isLoading, error, products } = useSelector((store) => store.product);
   const dispatch = useDispatch();
   useEffect(function () {
     dispatch(getAllProducts());
@@ -30,7 +26,7 @@ export default function Home() {
   if (isLoading) {
     return <SpinnerFullPage />;
   }
-
+  console.log(products);
   if (error) {
     return (
       <ErrorMessage>

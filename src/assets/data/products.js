@@ -25,7 +25,7 @@ import productImg25 from "../images/wireless-03.png";
 const products = [
   {
     id: "01",
-    productName: "Stone and Beam Westview ",
+    productName: "Stone and Beam Westview",
     imgUrl: "/src/assets/images/double-sofa-01.png",
     category: "sofa",
     price: 193,
@@ -180,7 +180,7 @@ const products = [
   {
     id: "07",
     productName: "Sakarias Armchair",
-    imgUrl: productImg07,
+    imgUrl: "gs://hussein-s-market.appspot.com/products/arm-chair-01.jpg",
     category: "chair",
     price: 99,
     shortDesc:
