@@ -9,11 +9,12 @@ import Menu from "remixicon-react/MenuLineIcon";
 import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
 import { useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
+import { logoutUser } from "../../redux/slices/userSlice";
 
 const links = [
   {
@@ -34,18 +35,13 @@ export default function Header() {
   const cartLength = useSelector((store) => store.cart.cart.length);
   const navigate = useNavigate();
   const currentUser = useSelector((store) => store.user.currentUser);
+  const dispatch = useDispatch();
   function toggleMenu() {
     menuRef.current.classList.toggle("active");
   }
   const profileActionsRef = useRef();
   function logout() {
-    signOut(auth)
-      .then(() => {
-        toast.success("Logged Out");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+    dispatch(logoutUser());
   }
   function toggleActions() {
     profileActionsRef.current.classList.toggle("show");

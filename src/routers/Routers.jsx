@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Suspense, lazy, useEffect } from "react";
 const Home = lazy(() => import("../pages/Home"));
 const Shop = lazy(() => import("../pages/Shop"));
 const ProductDetails = lazy(() => import("../pages/ProductDetails"));
@@ -15,6 +15,13 @@ import ProtectRoute from "./ProtectRoute";
 import SpinnerFullPage from "../components/SpinnerFullPage/SpinnerFullPage";
 
 export default function Routers() {
+  const location = useLocation();
+  useEffect(
+    function () {
+      window.scrollTo(0, 0);
+    },
+    [location.pathname]
+  );
   return (
     <Suspense fallback={<SpinnerFullPage />}>
       <Routes>

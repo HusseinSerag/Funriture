@@ -1,13 +1,12 @@
 import { Col, Container, Form, FormGroup, Row } from "react-bootstrap";
 import styles from "./../styles/Login.module.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner/Spinner";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/slices/userSlice";
+import { loginUser } from "../redux/slices/userSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,33 +20,8 @@ export default function Login() {
       toast.error("Please fill in all the fields");
       return;
     }
-    setLoading(true);
 
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      dispatch(
-        setUser({
-          currentUser: {
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            uid: user.uid,
-          },
-          status: "Logged",
-        })
-      );
-      toast.success("Successfully logged in");
-      navigate("/home");
-    } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
-    }
+    dispatch(loginUser({ email, password, navigate }));
   }
   return (
     <div>

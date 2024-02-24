@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addReview, getProduct } from "../../redux/slices/productSlice";
 export default function Reviews() {
   const product = useSelector((store) => store.product.currentProduct);
+  const user = useSelector((store) => store.user.status);
   const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [rating, setRating] = useState("");
@@ -20,7 +21,10 @@ export default function Reviews() {
   );
   function handleClick(e) {
     e.preventDefault();
-
+    if (user === "unLogged") {
+      toast.error("Please login to add reviews!");
+      return;
+    }
     dispatch(
       addReview({
         review: {

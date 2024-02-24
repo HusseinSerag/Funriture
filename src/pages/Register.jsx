@@ -1,7 +1,7 @@
 import { Col, Container, Form, FormGroup, Row } from "react-bootstrap";
 import styles from "./../styles/Register.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -12,70 +12,22 @@ import { setDoc, doc } from "firebase/firestore";
 
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../redux/slices/userSlice";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [files, setFiles] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { isLoading } = useSelector((store) => store.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function register(e) {
     e.preventDefault();
-    if (!email || !password || !username) {
-      toast.error("Please fill in all the fields!");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      const user = userCredential.user;
-
-      const storageRef = ref(storage, `images/${Date.now() + username}`);
-      const uploadTask = uploadBytesResumable(storageRef, files);
-      uploadTask.on(
-        (error) => {
-          toast.error(error.message);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            updateProfile(user, {
-              //update user's profile
-              displayName: username,
-              photoURL: downloadURL,
-            })
-              .then(async () => {
-                setDoc(doc(db, "users", user.uid), {
-                  uid: user.uid,
-                  displayName: username,
-                  email,
-                  photoURL: downloadURL,
-                  cart: [],
-                });
-              })
-              .then(() => {
-                setLoading(false);
-                toast.success("Successfully registered!");
-                navigate("/login");
-              });
-
-            //store user in db
-          });
-        }
-      );
-    } catch (err) {
-      setLoading(false);
-      toast.error("Something went wrong!");
-    } finally {
-      setLoading(false);
-    }
+    dispatch(registerUser({ email, password, files, username, navigate }));
   }
+  useEffect(() => {}, []);
   return (
     <div>
       <section>
@@ -84,7 +36,7 @@ export default function Register() {
             <Col lg="6" className="m-auto text-center">
               <h1 className={styles.title}>Register</h1>
 
-              {loading ? (
+              {isLoading ? (
                 <Spinner />
               ) : (
                 <Form className={styles.authForm} onSubmit={register}>
