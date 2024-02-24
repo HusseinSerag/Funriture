@@ -3,25 +3,48 @@ import { NavLink, Outlet, useParams } from "react-router-dom";
 import HeroSection from "../components/HeroSection/HeroSection";
 import products from "../assets/data/products";
 import styles from "./../styles/ProductDetails.module.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 import ProductList from "../components/ProductList/ProductList";
 import { motion } from "framer-motion";
 import StarFilled from "remixicon-react/StarFillIcon";
 import StarLined from "remixicon-react/StarLineIcon";
+import { useEffect } from "react";
+import { getProduct } from "../redux/slices/productSlice";
+import SpinnerFullPage from "../components/SpinnerFullPage/SpinnerFullPage";
+import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 export default function ProductDetails() {
   const { id } = useParams();
-  const product = products.find((product) => product.id === id);
   const dispatch = useDispatch();
+  const {
+    products,
+    currentProduct: product,
+    isLoading,
+    error,
+  } = useSelector((store) => store.product);
+  useEffect(
+    function () {
+      dispatch(getProduct(id));
+    },
+    [id]
+  );
+
+  if (isLoading) {
+    return <SpinnerFullPage />;
+  }
+  if (error) {
+    return <ErrorMessage>{error}</ErrorMessage>;
+  }
   const filteredProducts = products.filter(
     (productCat) => productCat.category === product.category
   );
-  const length = Math.floor(product.avgRating);
-  const filled = Array.from({ length: length }, (_, i) => (
+
+  const length = Math.floor(product?.avgRating);
+  const filled = Array.from({ length: length || 0 }, (_, i) => (
     <StarFilled key={i} className={styles.icon} size={20} />
   ));
-  const notFilled = Array.from({ length: 5 - length }, (_, i) => (
+  const notFilled = Array.from({ length: 5 - length || 0 }, (_, i) => (
     <StarLined key={i} className={styles.icon} size={20} />
   ));
 
@@ -94,7 +117,7 @@ export default function ProductDetails() {
                 to="reviews"
                 className={({ isActive }) => (isActive ? styles.active : "")}
               >
-                Reviews ({product.reviews.length})
+                Reviews ({product?.reviews?.length})
               </NavLink>
             </div>
             <Outlet />

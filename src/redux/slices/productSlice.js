@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import products from "../../assets/data/products";
 
@@ -7,6 +14,7 @@ const initialState = {
   products: [],
   error: "",
   isLoading: false,
+  currentProduct: {},
 };
 
 const productSlice = createSlice({
@@ -23,6 +31,18 @@ const productSlice = createSlice({
         state.isLoading = true;
       }),
       builder.addCase(getAllProducts.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      }),
+      builder.addCase(getProduct.fulfilled, (state, action) => {
+        state.currentProduct = action.payload;
+        state.isLoading = false;
+      }),
+      builder.addCase(getProduct.pending, (state, action) => {
+        state.error = "";
+        state.isLoading = true;
+      }),
+      builder.addCase(getProduct.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
       });
@@ -43,6 +63,25 @@ export const getAllProducts = createAsyncThunk(
     } catch (err) {
       return err;
     }
+  }
+);
+export const getProduct = createAsyncThunk("product/getProduct", async (id) => {
+  const docRef = doc(db, "products", id);
+  const snap = await getDoc(docRef);
+  if (snap.exists()) {
+    return { ...snap.data(), id: snap.id };
+  } else {
+    return "No Product is found!";
+  }
+});
+
+export const addReview = createAsyncThunk(
+  "product/addReview",
+  async ({ review, id }) => {
+    const reviewsRef = doc(db, "products", id);
+    await updateDoc(reviewsRef, {
+      reviews: arrayUnion(review),
+    });
   }
 );
 

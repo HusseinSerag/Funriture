@@ -1,20 +1,36 @@
 import { Col, Container, Row } from "react-bootstrap";
 import styles from "./Reviews.module.scss";
-import { useParams } from "react-router-dom";
-import products from "../../assets/data/products";
+
 import StarRating from "../StarRating";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { addReview, getProduct } from "../../redux/slices/productSlice";
 export default function Reviews() {
-  const { id } = useParams();
-  const product = products.find((product) => product.id === id);
+  const product = useSelector((store) => store.product.currentProduct);
+  const dispatch = useDispatch();
+  const [text, setText] = useState("");
+  const [rating, setRating] = useState("");
+
   useEffect(
     function () {
       window.scrollTo(0, 0);
     },
     [product]
   );
-  function handleClick() {
+  function handleClick(e) {
+    e.preventDefault();
+
+    dispatch(
+      addReview({
+        review: {
+          text,
+          rating,
+        },
+        id: product.id,
+      })
+    );
+    dispatch(getProduct(product.id));
     toast.success("Review Submitted!");
   }
   return (
@@ -22,7 +38,7 @@ export default function Reviews() {
       <Container>
         <Row>
           <div className={styles.comments}>
-            {product.reviews.map((review, index) => (
+            {product?.reviews?.map((review, index) => (
               <div className={styles.comment} key={index}>
                 <div className={styles.name}>
                   {review.name ? review.name : "(Anonymous)"}
@@ -40,10 +56,11 @@ export default function Reviews() {
               <div className={styles.commentContainer}>
                 <div className={styles.wrapper}>
                   <h1 className={`${styles.title}`}>Leave your experience</h1>
-                  <div className={styles.input}>
+                  <form className={styles.input} onSubmit={handleClick}>
                     <input placeholder="Enter name..." />
                     <div className={styles.starRating}>
                       <StarRating
+                        onSetRating={setRating}
                         size={30}
                         maxRating={5}
                         fontWeight={600}
@@ -56,12 +73,13 @@ export default function Reviews() {
                         ]}
                       />
                     </div>
-                    <textarea placeholder="Review Message..."></textarea>
-                  </div>
-
-                  <button className={styles.btn} onClick={handleClick}>
-                    Submit
-                  </button>
+                    <textarea
+                      placeholder="Review Message..."
+                      onChange={(e) => setText(e.target.value)}
+                      value={text}
+                    ></textarea>
+                    <button className={styles.btn}>Submit</button>
+                  </form>
                 </div>
               </div>
             </Col>

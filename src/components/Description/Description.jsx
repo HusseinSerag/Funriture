@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
 import styles from "./Description.module.scss";
-import products from "../../assets/data/products";
+import { useSelector } from "react-redux";
 
 export default function Description() {
-  const { id } = useParams();
-  const product = products.find((product) => product.id === id);
+  const product = useSelector((store) => store.product.currentProduct);
   return (
     <div className={styles.description}>
       <p>{product.description}</p>

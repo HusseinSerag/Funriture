@@ -19,10 +19,7 @@ import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 export default function Home() {
   const currentUser = useSelector((store) => store.user.currentUser);
   const { isLoading, error, products } = useSelector((store) => store.product);
-  const dispatch = useDispatch();
-  useEffect(function () {
-    dispatch(getAllProducts());
-  }, []);
+
   if (isLoading) {
     return <SpinnerFullPage />;
   }
