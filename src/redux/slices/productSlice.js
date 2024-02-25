@@ -5,9 +5,11 @@ import {
   doc,
   getDoc,
   getDocs,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { toast } from "react-toastify";
 
 const initialState = {
   products: [],
@@ -67,6 +69,7 @@ export const getAllProducts = createAsyncThunk(
 export const getProduct = createAsyncThunk("product/getProduct", async (id) => {
   const docRef = doc(db, "products", id);
   const snap = await getDoc(docRef);
+
   if (snap.exists()) {
     return { ...snap.data(), id: snap.id };
   } else {
@@ -74,15 +77,23 @@ export const getProduct = createAsyncThunk("product/getProduct", async (id) => {
   }
 });
 
-export const addReview = createAsyncThunk(
-  "product/addReview",
-  async ({ review, id }) => {
+export const addReview = function (review, id, allReviews) {
+  return async function (dispatch, getState) {
+    const newArr = [...allReviews, review];
     const reviewsRef = doc(db, "products", id);
-    await updateDoc(reviewsRef, {
-      reviews: arrayUnion(review),
-    });
-  }
-);
+
+    try {
+      await updateDoc(reviewsRef, {
+        reviews: newArr,
+      });
+
+      dispatch(getProduct(id));
+      toast.success("Review Submitted!");
+    } catch (err) {
+      toast.error("Error while submitting review!");
+    }
+  };
+};
 
 export const {} = productSlice.actions;
 

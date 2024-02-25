@@ -9,9 +9,13 @@ import { addReview, getProduct } from "../../redux/slices/productSlice";
 export default function Reviews() {
   const product = useSelector((store) => store.product.currentProduct);
   const user = useSelector((store) => store.user.status);
+  const displayName = useSelector(
+    (store) => store.user.currentUser.displayName
+  );
   const dispatch = useDispatch();
   const [text, setText] = useState("");
   const [rating, setRating] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(
     function () {
@@ -26,17 +30,16 @@ export default function Reviews() {
       return;
     }
     dispatch(
-      addReview({
-        review: {
+      addReview(
+        {
           text,
           rating,
-          name: user.displayName,
+          name: name === "" ? displayName : name,
         },
-        id: product.id,
-      })
+        product.id,
+        product.reviews
+      )
     );
-    dispatch(getProduct(product.id));
-    toast.success("Review Submitted!");
   }
   return (
     <div className={styles.reviews}>
@@ -62,7 +65,11 @@ export default function Reviews() {
                 <div className={styles.wrapper}>
                   <h1 className={`${styles.title}`}>Leave your experience</h1>
                   <form className={styles.input} onSubmit={handleClick}>
-                    <input placeholder="Enter name..." />
+                    <input
+                      placeholder="Enter name..."
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
                     <div className={styles.starRating}>
                       <StarRating
                         onSetRating={setRating}
