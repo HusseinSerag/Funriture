@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
-import { removeItemFromCart } from "../redux/slices/userSlice";
+import { removeItem } from "../redux/slices/userSlice";
 export default function Cart() {
   // const { cart } = useSelector((store) => store.cart);
   const user = useSelector((store) => store.user.currentUser.cart);
@@ -14,7 +14,7 @@ export default function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   function handleDelete(item) {
-    dispatch(removeItemFromCart(item));
+    dispatch(removeItem(item));
   }
   const subTotal = user?.reduce((previous, current) => {
     return previous + current.price * current.quantity;

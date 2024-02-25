@@ -27,22 +27,9 @@ const userSlice = createSlice({
         state.isLoading = false;
       },
     },
-    addToUserCart: {
-      reducer(state, action) {
-        state.currentUser.cart = action.payload;
-      },
-    },
-    removeItemFromCart(state, action) {
-      const item = action.payload;
-      const exists = state.cart.find((oldItems) => oldItems.id === item.id);
-      if (exists.quantity > 1) {
-        exists.quantity--;
-      } else {
-        const index = state.cart.findIndex(
-          (oldItems) => oldItems.id === item.id
-        );
-        state.cart.splice(index, 1);
-      }
+
+    setCart(state, action) {
+      state.currentUser.cart = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -86,18 +73,7 @@ export function addItem(item) {
       }
     }
 
-    const docRef = doc(db, "users", user.uid);
-
-    //AYSNC CODE
-
-    try {
-      await updateDoc(docRef, {
-        cart: newCart,
-      });
-      dispatch({ type: "user/addToUserCart", payload: newCart });
-    } catch (err) {
-      toast.error("Something went wrong!");
-    }
+    await talkWithDB(user.uid, newCart, dispatch);
   };
 }
 export function removeItem(item) {
@@ -106,11 +82,30 @@ export function removeItem(item) {
     let newCart = [...user.cart];
     const exists = newCart.find((oldItems) => oldItems.id === item.id);
     if (exists.quantity > 1) {
-      console.log("My quantity is ", exists.quantity);
+      newCart = newCart.map((items) =>
+        items.id !== item.id ? items : { ...item, quantity: items.quantity - 1 }
+      );
     } else {
-      console.log("You just added me, my quantity is ", exists.quantity);
+      const index = newCart.findIndex((items) => items.id === item.id);
+      newCart.splice(index, 1);
     }
+
+    await talkWithDB(user.uid, newCart, dispatch, "Item removed from cart!");
   };
+}
+
+async function talkWithDB(uid, newCart, dispatch, message) {
+  const docRef = doc(db, "users", uid);
+  try {
+    await updateDoc(docRef, {
+      cart: newCart,
+    });
+    dispatch({ type: "user/setCart", payload: newCart });
+
+    message && toast.success(message);
+  } catch (err) {
+    toast.error("Something went wrong!");
+  }
 }
 export const loginUser = createAsyncThunk(
   "user/login",
