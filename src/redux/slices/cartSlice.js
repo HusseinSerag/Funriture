@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cart: [],
+  error: "",
 };
 const cartSlice = createSlice({
   name: "cart",
@@ -22,6 +23,7 @@ const cartSlice = createSlice({
         }
       },
     },
+
     removeItem(state, action) {
       const item = action.payload;
       const exists = state.cart.find((oldItems) => oldItems.id === item.id);

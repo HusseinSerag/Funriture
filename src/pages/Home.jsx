@@ -17,13 +17,12 @@ import SpinnerFullPage from "../components/SpinnerFullPage/SpinnerFullPage";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 
 export default function Home() {
-  const currentUser = useSelector((store) => store.user.currentUser);
   const { isLoading, error, products } = useSelector((store) => store.product);
 
   if (isLoading) {
     return <SpinnerFullPage />;
   }
-  console.log(products);
+
   if (error) {
     return (
       <ErrorMessage>

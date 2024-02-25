@@ -6,9 +6,11 @@ import SearchIcon from "remixicon-react/SearchLineIcon";
 import { useMemo, useState } from "react";
 import ProductList from "../components/ProductList/ProductList";
 import { useSelector } from "react-redux";
+import SpinnerFullPage from "../components/SpinnerFullPage/SpinnerFullPage";
+import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 
 export default function Shop() {
-  const { products } = useSelector((store) => store.product);
+  const { products, isLoading, error } = useSelector((store) => store.product);
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
   const [searchBar, setSearchBar] = useState("");
@@ -31,9 +33,15 @@ export default function Shop() {
       )),
     [categories]
   );
+  if (isLoading) {
+    return <SpinnerFullPage />;
+  }
+  if (error) {
+    return <ErrorMessage>error</ErrorMessage>;
+  }
   let filteredProduct = filterProducts(products, filter, searchBar);
   filteredProduct = sortProducts(filteredProduct, sort);
-  console.log(filteredProduct);
+
   return (
     <div>
       <HeroSection title={"Products"} />

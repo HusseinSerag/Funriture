@@ -8,6 +8,7 @@ import { removeItem } from "../redux/slices/cartSlice";
 import { motion } from "framer-motion";
 export default function Cart() {
   const { cart } = useSelector((store) => store.cart);
+  const user = useSelector((store) => store.user.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   function handleDelete(item) {

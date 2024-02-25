@@ -1,0 +1,1 @@
+import{j as e,C as t}from"./index-D6uHHCIV.js";const n="_section_1pewp_1",c={section:n};function i({title:s}){return e.jsx("section",{className:c.section,children:e.jsx(t,{className:"text-center",children:e.jsx("h1",{children:s})})})}export{i as H};

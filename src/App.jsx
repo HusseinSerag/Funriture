@@ -11,5 +11,6 @@ export default function App() {
   useEffect(function () {
     dispatch(fetchUser());
   }, []);
+
   return isLoading ? <SpinnerFullPage /> : <Layout />;
 }

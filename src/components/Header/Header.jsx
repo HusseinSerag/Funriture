@@ -11,9 +11,6 @@ import Logo from "../Logo/Logo";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
-import { toast } from "react-toastify";
 import { logoutUser } from "../../redux/slices/userSlice";
 
 const links = [
@@ -33,6 +30,7 @@ const links = [
 export default function Header() {
   const menuRef = useRef(null);
   const cartLength = useSelector((store) => store.cart.cart.length);
+
   const navigate = useNavigate();
   const currentUser = useSelector((store) => store.user.currentUser);
   const dispatch = useDispatch();

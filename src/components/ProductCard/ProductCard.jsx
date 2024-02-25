@@ -3,12 +3,13 @@ import AddToList from "remixicon-react/AddLineIcon";
 import { Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/slices/cartSlice";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Star from "remixicon-react/StarFillIcon";
 export default function ProductCard({ item }) {
   const dispatch = useDispatch();
+
   function handleClick() {
     dispatch(
       addItem({

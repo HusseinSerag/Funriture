@@ -28,10 +28,21 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.currentUser = action.payload;
-      state.status = "logged";
+    builder.addCase(loginUser.pending, (state, action) => {
+      state.isLoading = true;
     }),
+      builder.addCase(registerUser.pending, (state, action) => {
+        state.isLoading = true;
+      }),
+      builder.addCase(registerUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.status = "logged";
+      }),
+      builder.addCase(loginUser.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+        state.status = "logged";
+        state.isLoading = false;
+      }),
       builder.addCase(logoutUser.fulfilled, (state, action) => {
         state.currentUser = {};
         state.status = "unLogged";

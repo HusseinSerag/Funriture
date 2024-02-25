@@ -30,6 +30,7 @@ export default function Reviews() {
         review: {
           text,
           rating,
+          name: user.displayName,
         },
         id: product.id,
       })

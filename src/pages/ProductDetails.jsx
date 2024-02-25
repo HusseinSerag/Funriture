@@ -17,6 +17,7 @@ import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 export default function ProductDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
+
   const {
     products,
     currentProduct: product,
