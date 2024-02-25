@@ -20,6 +20,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [files, setFiles] = useState(null);
   const { isLoading } = useSelector((store) => store.user);
+  const { isLoading: loading } = useSelector((store) => store.product);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,7 +28,7 @@ export default function Register() {
     e.preventDefault();
     dispatch(registerUser({ email, password, files, username, navigate }));
   }
-  useEffect(() => {}, []);
+
   return (
     <div>
       <section>
@@ -36,7 +37,7 @@ export default function Register() {
             <Col lg="6" className="m-auto text-center">
               <h1 className={styles.title}>Register</h1>
 
-              {isLoading ? (
+              {isLoading || loading ? (
                 <Spinner />
               ) : (
                 <Form className={styles.authForm} onSubmit={register}>

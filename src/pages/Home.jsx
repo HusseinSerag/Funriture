@@ -9,8 +9,7 @@ import counterImg from "../assets/images/counter-timer-img.png";
 
 import Clock from "../components/Clock/Clock";
 
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { getAllProducts } from "../redux/slices/productSlice";
 import SpinnerFullPage from "../components/SpinnerFullPage/SpinnerFullPage";

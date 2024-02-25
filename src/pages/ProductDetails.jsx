@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { getProduct } from "../redux/slices/productSlice";
 import SpinnerFullPage from "../components/SpinnerFullPage/SpinnerFullPage";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
+import { addToUserCart } from "../redux/slices/userSlice";
 export default function ProductDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ export default function ProductDetails() {
 
   function handleClick() {
     dispatch(
-      addItem({
+      addToUserCart({
         id: product.id,
         productName: product.productName,
         price: product.price,

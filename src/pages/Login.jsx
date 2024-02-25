@@ -1,7 +1,7 @@
 import { Col, Container, Form, FormGroup, Row } from "react-bootstrap";
 import styles from "./../styles/Login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner/Spinner";
@@ -14,6 +14,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   async function login(e) {
     e.preventDefault();
     if (!email || !password) {

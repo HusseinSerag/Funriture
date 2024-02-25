@@ -29,8 +29,9 @@ const links = [
 ];
 export default function Header() {
   const menuRef = useRef(null);
-  const cartLength = useSelector((store) => store.cart.cart.length);
-
+  const cartLength = useSelector(
+    (store) => store.user.currentUser.cart?.length
+  );
   const navigate = useNavigate();
   const currentUser = useSelector((store) => store.user.currentUser);
   const dispatch = useDispatch();

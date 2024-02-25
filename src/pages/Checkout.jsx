@@ -3,7 +3,7 @@ import HeroSection from "../components/HeroSection/HeroSection";
 import styles from "./../styles/Checkout.module.scss";
 import { useSelector } from "react-redux";
 export default function Checkout() {
-  const { cart } = useSelector((store) => store.cart);
+  const { cart } = useSelector((store) => store.user.currentUser);
   const subTotal = cart.reduce((previous, current) => {
     return previous + current.price * current.quantity;
   }, 0);

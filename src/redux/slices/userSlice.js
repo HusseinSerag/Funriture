@@ -9,7 +9,7 @@ import {
 import { auth, db, storage } from "../../firebase";
 import { toast } from "react-toastify";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 const initialState = {
   currentUser: {},
@@ -24,7 +24,25 @@ const userSlice = createSlice({
       reducer(state, action) {
         state.currentUser = action.payload.currentUser;
         state.status = action.payload.status;
+        state.isLoading = false;
       },
+    },
+    addToUserCart: {
+      reducer(state, action) {
+        state.currentUser.cart = action.payload;
+      },
+    },
+    removeItemFromCart(state, action) {
+      const item = action.payload;
+      const exists = state.cart.find((oldItems) => oldItems.id === item.id);
+      if (exists.quantity > 1) {
+        exists.quantity--;
+      } else {
+        const index = state.cart.findIndex(
+          (oldItems) => oldItems.id === item.id
+        );
+        state.cart.splice(index, 1);
+      }
     },
   },
   extraReducers: (builder) => {
@@ -35,7 +53,6 @@ const userSlice = createSlice({
         state.isLoading = true;
       }),
       builder.addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.status = "logged";
       }),
       builder.addCase(loginUser.fulfilled, (state, action) => {
@@ -49,7 +66,52 @@ const userSlice = createSlice({
       });
   },
 });
+export function addItem(item) {
+  return async function (dispatch, getState) {
+    const user = getState().user.currentUser;
+    let newCart = [];
+    if (user.cart.length === 0) {
+      newCart.push({ ...item, quantity: 1 });
+    } else {
+      newCart = [...user.cart];
+      const found = newCart.find((idItem) => idItem.id === item.id);
+      if (found) {
+        newCart = newCart.map((items) =>
+          items.id !== found.id
+            ? items
+            : { ...found, quantity: found.quantity + 1, reviews: found.reviews }
+        );
+      } else {
+        newCart.push({ ...item, quantity: 1 });
+      }
+    }
 
+    const docRef = doc(db, "users", user.uid);
+
+    //AYSNC CODE
+
+    try {
+      await updateDoc(docRef, {
+        cart: newCart,
+      });
+      dispatch({ type: "user/addToUserCart", payload: newCart });
+    } catch (err) {
+      toast.error("Something went wrong!");
+    }
+  };
+}
+export function removeItem(item) {
+  return async function (dispatch, getState) {
+    const user = getState().user.currentUser;
+    let newCart = [...user.cart];
+    const exists = newCart.find((oldItems) => oldItems.id === item.id);
+    if (exists.quantity > 1) {
+      console.log("My quantity is ", exists.quantity);
+    } else {
+      console.log("You just added me, my quantity is ", exists.quantity);
+    }
+  };
+}
 export const loginUser = createAsyncThunk(
   "user/login",
   async ({ email, password, navigate }) => {
@@ -110,8 +172,6 @@ export const registerUser = createAsyncThunk(
 
             toast.success("Successfully registered!");
             navigate("/");
-
-            //store user in db
           });
         }
       );
@@ -154,5 +214,5 @@ export const logoutUser = createAsyncThunk("user/logout", async () => {
       toast.error(err.message);
     });
 });
-export const { setUser } = userSlice.actions;
+export const { setUser, addToUserCart, removeItemFromCart } = userSlice.actions;
 export default userSlice.reducer;

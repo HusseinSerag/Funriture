@@ -5,15 +5,16 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 export default function ProtectRoute({ children }) {
-  const { status, currentUser } = useSelector((store) => store.user);
+  const currentUser = useSelector((store) => store.user.currentUser);
+
   const navigate = useNavigate();
   useEffect(
     function () {
-      if (status === "unLogged") {
+      if (!currentUser.displayName) {
         navigate("/login");
       }
     },
-    [status]
+    [currentUser.displayName]
   );
   return currentUser.displayName ? children : "";
 }

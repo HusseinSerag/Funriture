@@ -4,17 +4,19 @@ import styles from "./../styles/Cart.module.scss";
 import Delete from "remixicon-react/DeleteBin2LineIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { removeItem } from "../redux/slices/cartSlice";
+
 import { motion } from "framer-motion";
+import { removeItemFromCart } from "../redux/slices/userSlice";
 export default function Cart() {
-  const { cart } = useSelector((store) => store.cart);
-  const user = useSelector((store) => store.user.currentUser);
+  // const { cart } = useSelector((store) => store.cart);
+  const user = useSelector((store) => store.user.currentUser.cart);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   function handleDelete(item) {
-    dispatch(removeItem(item));
+    dispatch(removeItemFromCart(item));
   }
-  const subTotal = cart.reduce((previous, current) => {
+  const subTotal = user?.reduce((previous, current) => {
     return previous + current.price * current.quantity;
   }, 0);
   return (
@@ -24,7 +26,7 @@ export default function Cart() {
         <Container>
           <Row>
             <Col lg="9">
-              {cart.length === 0 ? (
+              {user.length === 0 ? (
                 <h1 className={styles.empty}>No items in the cart!</h1>
               ) : (
                 <table className={`table bordered ${styles.table}`}>
@@ -38,7 +40,7 @@ export default function Cart() {
                     </tr>
                   </thead>
                   <tbody>
-                    {cart.map((item) => (
+                    {user.map((item) => (
                       <tr key={item.id}>
                         <td>
                           <img className={styles.img} src={item.imgUrl} />

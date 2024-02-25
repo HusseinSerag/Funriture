@@ -26,14 +26,42 @@ export default function Routers() {
     <Suspense fallback={<SpinnerFullPage />}>
       <Routes>
         <Route index element={<Navigate replace to="/home" />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop/:id" element={<ProductDetails />}>
+        <Route
+          path="/home"
+          element={
+            <ProtectRoute>
+              <Home />
+            </ProtectRoute>
+          }
+        />
+        <Route
+          path="/shop"
+          element={
+            <ProtectRoute>
+              <Shop />
+            </ProtectRoute>
+          }
+        />
+        <Route
+          path="/shop/:id"
+          element={
+            <ProtectRoute>
+              <ProductDetails />
+            </ProtectRoute>
+          }
+        >
           <Route index element={<Navigate replace to="description" />} />
           <Route path="description" element={<Description />} />
           <Route path="reviews" element={<Reviews />} />
         </Route>
-        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/cart"
+          element={
+            <ProtectRoute>
+              <Cart />
+            </ProtectRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route
           path="/checkout"

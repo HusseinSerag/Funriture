@@ -8,7 +8,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import products from "../../assets/data/products";
 
 const initialState = {
   products: [],

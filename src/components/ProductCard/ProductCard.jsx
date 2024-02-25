@@ -4,21 +4,23 @@ import { Col } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../redux/slices/cartSlice";
+
 import { toast } from "react-toastify";
 import Star from "remixicon-react/StarFillIcon";
+import { addItem, addToUserCart } from "../../redux/slices/userSlice";
 export default function ProductCard({ item }) {
   const dispatch = useDispatch();
 
   function handleClick() {
-    dispatch(
-      addItem({
-        id: item.id,
-        productName: item.productName,
-        price: item.price,
-        imgUrl: item.imgUrl,
-      })
-    );
+    dispatch(addItem(item));
+    // dispatch(
+    //   addToUserCart({
+    //     id: item.id,
+    //     productName: item.productName,
+    //     price: item.price,
+    //     imgUrl: item.imgUrl,
+    //   })
+    // );
 
     toast.success("Product added to cart");
   }
