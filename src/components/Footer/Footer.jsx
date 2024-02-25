@@ -49,7 +49,7 @@ export default function Footer() {
                   <Link to="/cart">Cart</Link>
                 </ListGroupItem>
                 <ListGroupItem className="ps-0 border-0">
-                  <Link to="/login">login</Link>
+                  <Link to="/register">register</Link>
                 </ListGroupItem>
                 <ListGroupItem className="ps-0 border-0">
                   <Link to="#">Privacy Policy</Link>
