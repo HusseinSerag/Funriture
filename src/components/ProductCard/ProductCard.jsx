@@ -13,14 +13,6 @@ export default function ProductCard({ item }) {
 
   function handleClick() {
     dispatch(addItem(item));
-    // dispatch(
-    //   addToUserCart({
-    //     id: item.id,
-    //     productName: item.productName,
-    //     price: item.price,
-    //     imgUrl: item.imgUrl,
-    //   })
-    // );
 
     toast.success("Product added to cart");
   }

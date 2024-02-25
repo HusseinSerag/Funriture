@@ -86,7 +86,13 @@ export const addReview = function (review, id, allReviews) {
       await updateDoc(reviewsRef, {
         reviews: newArr,
       });
-
+      const avgRating = newArr.reduce((prev, curr) => {
+        return prev + curr.rating;
+      }, 0);
+      const rating = Math.round(avgRating / newArr.length);
+      await updateDoc(reviewsRef, {
+        avgRating: rating,
+      });
       dispatch(getProduct(id));
       toast.success("Review Submitted!");
     } catch (err) {
