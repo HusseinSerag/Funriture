@@ -1,17 +1,17 @@
 import { Col, Container, Form, FormGroup, Row } from "react-bootstrap";
 import styles from "./../styles/Login.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner/Spinner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/slices/userSlice";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { isLoading: loading } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

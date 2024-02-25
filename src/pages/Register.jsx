@@ -1,16 +1,8 @@
 import { Col, Container, Form, FormGroup, Row } from "react-bootstrap";
 import styles from "./../styles/Register.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth } from "../firebase";
-import { storage, db } from "../firebase";
-
-import { setDoc, doc } from "firebase/firestore";
-
-import { toast } from "react-toastify";
 import Spinner from "../components/Spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/slices/userSlice";

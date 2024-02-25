@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import styles from "./Description.module.scss";
 import { useSelector } from "react-redux";
 

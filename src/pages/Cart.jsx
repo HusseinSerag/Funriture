@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { removeItem } from "../redux/slices/userSlice";
 export default function Cart() {
-  // const { cart } = useSelector((store) => store.cart);
   const user = useSelector((store) => store.user.currentUser.cart);
 
   const navigate = useNavigate();

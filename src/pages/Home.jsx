@@ -11,7 +11,6 @@ import Clock from "../components/Clock/Clock";
 
 import { useSelector } from "react-redux";
 
-import { getAllProducts } from "../redux/slices/productSlice";
 import SpinnerFullPage from "../components/SpinnerFullPage/SpinnerFullPage";
 import ErrorMessage from "../components/ErrorMessage/ErrorMessage";
 

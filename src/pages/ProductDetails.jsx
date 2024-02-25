@@ -1,10 +1,8 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { NavLink, Outlet, useParams } from "react-router-dom";
 import HeroSection from "../components/HeroSection/HeroSection";
-import products from "../assets/data/products";
 import styles from "./../styles/ProductDetails.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 import ProductList from "../components/ProductList/ProductList";
 import { motion } from "framer-motion";
