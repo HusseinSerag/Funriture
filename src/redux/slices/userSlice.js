@@ -43,9 +43,14 @@ const userSlice = createSlice({
         state.status = "logged";
       }),
       builder.addCase(loginUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
-        state.status = "logged";
-        state.isLoading = false;
+        if (action.payload.error == "") {
+          state.isLoading = false;
+          return;
+        } else {
+          state.currentUser = action.payload;
+          state.status = "logged";
+          state.isLoading = false;
+        }
       }),
       builder.addCase(logoutUser.fulfilled, (state, action) => {
         state.currentUser = {};
@@ -128,6 +133,7 @@ export const loginUser = createAsyncThunk(
         };
       } catch (err) {
         toast.error(err.message);
+        return { error: "" };
       }
     }
   }
